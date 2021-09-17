@@ -65,11 +65,15 @@ pub fn start() {
     );
     loop {
         let res = mainloop(token, secret, &cfg, &mut owned, &mut list, &watched);
-        if res.is_err() {
-            continue;
-        } else {
-            owned = res.unwrap();
-            sleep(sleeptime);
+        match res {
+            Ok(own) => {
+                owned = own;
+                sleep(sleeptime);
+            }
+            Err(e) => {
+                println!("Error: {}", e.message);
+                continue;
+            }
         }
     }
 }
