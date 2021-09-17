@@ -9,6 +9,13 @@ use super::error::Error;
 const DEPTH: f64 = 10000.0;
 const MIN: f64 = 20.0;
 
+/// will purchase a certain coin for a specific price
+/// amount is the amount in `fiat`
+/// if the total amount is not available,
+/// it will try to purchase for the balance for the balance you have
+/// if the amount is less than MIN, it will become MIN
+/// and if its lower than account balance, it will become account balance
+
 pub fn buy(
     amount: f64,
     account: &Account,
@@ -53,6 +60,9 @@ pub fn buy(
     }
 }
 
+/// calculates the total value of all the coins in your account
+/// and returns an f64 containing those values
+
 pub fn evaluate_balance(
     curr_prices: &HashMap<String, f64>,
     bal: &HashMap<String, f64>,
@@ -73,6 +83,9 @@ pub fn evaluate_balance(
     val
 }
 
+/// gets all of the balances from your account
+/// and returns a hashmap containing all of those values
+
 pub fn get_balance(account: &Account) -> Result<HashMap<String, f64>, Error> {
     let mut res = HashMap::new();
     match account.get_account() {
@@ -91,6 +104,8 @@ pub fn get_balance(account: &Account) -> Result<HashMap<String, f64>, Error> {
         }),
     }
 }
+
+/// Will make a purchase of a coin using a percentage of your total account value
 
 pub fn buy_percent(
     perc: f64,

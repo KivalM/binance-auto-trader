@@ -3,6 +3,7 @@ use std::convert::TryInto;
 use serenity::{model::id::ChannelId, Client};
 use toml::Value;
 
+/// Will send a message to the discord channel
 pub fn notify(ty: String, cfg: &Value) {
     let token: &str = cfg["discord_token"].as_str().unwrap_or("");
 

@@ -7,6 +7,8 @@ use crate::app::notify::notify;
 
 use super::error::Error;
 
+/// Will sell all of your current balance of a specified token
+///
 pub fn sell(
     account: &Account,
     symbol: &str,
@@ -50,6 +52,9 @@ pub fn sell(
     }
 }
 
+///
+/// Will sell everything that you have a balance of
+///
 pub fn sell_all(
     prices: &HashMap<String, f64>,
     balances: &HashMap<String, f64>,

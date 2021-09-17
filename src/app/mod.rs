@@ -23,6 +23,7 @@ pub mod notify;
 pub mod sell;
 pub mod watch;
 
+/// will initialize variables
 pub fn start() {
     let cfg = load_config();
     verify_config(&cfg);
@@ -77,6 +78,8 @@ pub fn start() {
         }
     }
 }
+
+/// main loop with all of the major logics
 
 pub fn mainloop(
     token: &str,

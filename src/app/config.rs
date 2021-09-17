@@ -2,6 +2,7 @@ use std::{fs, str::FromStr};
 
 use toml::Value;
 
+/// will load the config from the current working directory
 pub fn load_config() -> Value {
     let s = fs::read_to_string("config.toml").unwrap();
     let mut cfg = s.parse::<Value>().unwrap();
@@ -16,6 +17,7 @@ pub fn load_config() -> Value {
     cfg
 }
 
+/// function to verify that the config.toml file does not contain any errors
 pub fn verify_config(_cfg: &Value) {
     // todo
     // panic!()

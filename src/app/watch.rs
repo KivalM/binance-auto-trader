@@ -5,14 +5,13 @@ use toml::Value;
 
 use super::{account::percent, buy::buy_percent, error::Error, sell::sell};
 
+/// returns the prices for the symbol right now, `time_up` ago and `time_down` ago
 pub fn get_kline_stats(
     market: &Market,
     time_down: usize,
     time_up: usize,
     symbol: &str,
 ) -> Result<(f64, f64, f64), Error> {
-    // Gets the current price of the determinant, the price TIME_UP ago, and TIME_DOWN ago
-
     let max = time_up.max(time_down);
     let lim = (max + 1) as u16;
 
@@ -35,6 +34,8 @@ pub fn get_kline_stats(
     }
 }
 
+/// checks `watched symbols` if they have met their thresholds to buy or sell
+/// and will send buy or sell the token based on that
 pub fn check_watched_symbols(
     market: &Market,
     account: &Account,

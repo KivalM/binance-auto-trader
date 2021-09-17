@@ -11,10 +11,12 @@ use super::{
     sell::{sell, sell_all},
 };
 
+/// calculates and returns the percentage increase between 2 values
 pub fn percent(old: f64, new: f64) -> f64 {
     ((new - old) / old) * 100.0
 }
 
+/// Retreives and stores all the current prices of all the coins in a hashmap
 pub fn get_prices(market: &Market) -> Result<HashMap<String, f64>, Error> {
     match market.get_all_prices() {
         Ok(answer) => match answer {
@@ -36,6 +38,10 @@ pub fn get_prices(market: &Market) -> Result<HashMap<String, f64>, Error> {
     }
 }
 
+/// will check old pricelist and new pricelist for newly listed
+/// tokens and will attempt to sell all of your tokens to purchase
+/// the newly listed token. the percent balance to purchase the new
+/// token with is specified in cargo.toml
 pub fn buy_new_tokens(
     old: &HashMap<String, f64>,
     new: &HashMap<String, f64>,
@@ -64,6 +70,11 @@ pub fn buy_new_tokens(
     Ok(())
 }
 
+/// checks the new values for price increases
+/// the threshold is set in cargo.toml
+/// it will purchase certain coins if they pass that threshold
+/// it will then be passed to the `owned` hashmap to monitor it
+/// for stop_loss or take_proft
 pub fn check_new(
     account: &Account,
     old: &HashMap<String, f64>,
@@ -111,7 +122,9 @@ pub fn check_new(
     }
     Ok(())
 }
-
+/// checks the `owned` hashmap for anything that needs to be sold
+/// it will either take_profit, stop_loss or sell once a coin is decreasing
+/// these will be specified in config.toml
 pub fn check_owned(
     owned: &mut HashMap<String, f64>,
     new: &HashMap<String, f64>,
