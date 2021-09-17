@@ -1,0 +1,17 @@
+[package]
+name = "crypto-trader"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+toml = "*"
+queues = "1.0.2"
+binance = { git = "https://github.com/wisespace-io/binance-rs.git" }
+dotenv = "*"
+# for discord
+serenity = { version = "*",default-features = false, features = ["client", "gateway", "rustls_backend", "model"]}
+async-std = "1.0"
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }

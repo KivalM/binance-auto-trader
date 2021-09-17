@@ -1,0 +1,121 @@
+#======================================================
+#     ____ ___  _   _ _____ ___ ____
+#    / ___/ _ \| \ | |  ___|_ _/ ___|
+#   | |  | | | |  \| | |_   | | |  _
+#   | |__| |_| | |\  |  _|  | | |_| |
+#    \____\___/|_| \_|_|   |___\____|
+#   
+#   ======================================================
+#    ___ __  __ ____   ___  ____ _____  _    _   _ _____
+#   |_ _|  \/  |  _ \ / _ \|  _ |_   _|/ \  | \ | |_   _|
+#    | || |\/| | |_) | | | | |_) || | / _ \ |  \| | | |
+#    | || |  | |  __/| |_| |  _ < | |/ ___ \| |\  | | |
+#   |___|_|  |_|_|    \___/|_| \_\|_/_/   \_|_| \_| |_|   
+#
+#   -> values that have a decimal must continue to have a decimal
+#   -> 5.0 is not the same as 5
+#   -> numbers without a decimal must continue to be that was as well
+#   -> the program will not work other wise
+#
+
+
+
+# these 2 have a weird dynamic
+# the lower the time_interval the more frequently the program will update
+# good for catching new coins or getting your profit or loss ASAP
+
+# num intervals tell the program over how many `time_interval`s 
+# to look at to determine whether a coin counts as increasing
+
+time_interval = 10
+num_intervals = 30
+
+# base of pair
+# havent really tested the other ones
+fiat = "USDT"
+
+# binance api token & secret
+# get this from the api management section on binance web
+token = ""
+# if token is empty
+# will look at this environment variable to get the value
+token_env_variable = ""
+
+secret = ""
+# if secret is empty
+# will look at this environment variable to get the value
+secret_env_variable = ""
+
+# discord api token
+# leave empty for no discord notifications
+discord_token = ""
+
+# discord channels to send notifications to
+channel_ids = [886912998831181835,774344735501844491]
+
+# value to determine the percent at which a coin counts as `increasing`
+# higher values are safer bets
+# Eg. Will buy ada if it went up `up`% over the past (time_interval * num_intervals) seconds
+up = 15.0
+
+# optional
+# value that will determine  whether a thing is decreasing and sell it
+# same way that `up` works
+# Will buy ada if it went down `down`% over the past (time_interval * num_intervals) seconds
+# comment out to use stop loss instead
+down = -5.0
+
+
+# automatically purchase coins after they went up `up` percent in the past `interval` seconds
+# for eg. 5% in the past 5 minutes
+# volatility trading is not a great idea
+# do at your own risk
+# will by defualt notify you about a coin going up
+autobuy_on_increase = false
+simulate_autobuy = false
+# percentage of account balance to put into these rising coins
+amount = 5.0
+
+# take out when made 4%
+take_profit = 4.0
+
+# sell when lost 3% etc
+stop_loss = -3.0
+
+# watched tokens
+# i.e tokens with a specific set of instructions to buy and sell
+# these will be based on statistical backed data to determine the best values
+# or you can put whatever
+
+# delete these if you dont want to `watch` any tokens
+# these are significantly safer than volatility tokens
+# and you can easily determine the best values from my other test program
+# soon to be integrated with this one
+
+[tokens]
+
+[tokens.eth]
+symbol = "ETHUSDT"
+token = "ETH"
+fiat = "USDT"
+perc_up = 0.865
+time_up = 151
+perc_down = -1.855
+time_down = 22
+ratio = 80.0
+
+[tokens.ada]
+symbol = "ADAUSDT"
+token = "ADA"
+fiat = "USDT"
+perc_up = 1.798
+time_up = 140
+perc_down = -1.781
+time_down = 146
+ratio = 20.0
+
+# will store owned tokens here
+# or in memory
+# todo
+[volatility_tokens]
+
