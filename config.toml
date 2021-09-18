@@ -82,11 +82,21 @@ take_profit = 4.0
 # sell when lost 3% etc
 stop_loss = -3.0
 
+#
+# automatically purchase newly listed tokens as soon
+# as they are listed on the binance.com exchange
+# 
+# a lower `time_interval` will help detect these tokens sooner
+buy_new_tokens = false
+
+# percent of total balance to put into a newly listed token
+new_token_amount = 30.0
+
 # watched tokens
 # i.e tokens with a specific set of instructions to buy and sell
 # these will be based on statistical backed data to determine the best values
 # or you can put whatever
-
+#
 # delete these if you dont want to `watch` any tokens
 # these are significantly safer than volatility tokens
 # and you can easily determine the best values from my other test program

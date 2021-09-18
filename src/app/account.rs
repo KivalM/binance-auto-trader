@@ -50,6 +50,7 @@ pub fn buy_new_tokens(
     fiat: &str,
     cfg: &Value,
 ) -> Result<(), Error> {
+    let buy = cfg["buy_new_tokens"].as_bool().unwrap();
     let mut res = HashMap::new();
     for (i, x) in new {
         if !old.contains_key(i) {
@@ -61,10 +62,12 @@ pub fn buy_new_tokens(
 
         sell_all(new, &bal, account, cfg)?;
         for (v, _u) in res {
-            println!("BUY {}", &v);
-            buy_percent(30.0, account, &v, fiat, new[&v], new, cfg)?;
-            // buy(None, account, &v, fiat, new[&v])?;
-            owned.insert(v.to_string(), new[&v]);
+            println!("New token: {}", &v);
+            if buy {
+                let amt = cfg["new_token_amount"].as_float().unwrap();
+                buy_percent(amt, account, &v, fiat, new[&v], new, cfg)?;
+                owned.insert(v.to_string(), new[&v]);
+            }
         }
     }
     Ok(())
