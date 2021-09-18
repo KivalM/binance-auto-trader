@@ -47,10 +47,7 @@ pub fn buy(
                     }
                 }
             } else {
-                return Err(Error {
-                    code: 2,
-                    message: format!("Insufficient Balance: {}", &rounded),
-                });
+                Ok(())
             }
         }
         Err(_) => Err(Error {
