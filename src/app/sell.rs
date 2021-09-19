@@ -46,7 +46,7 @@ pub fn sell(
             println!("{:?}", e);
             return Err(Error {
                 code: 2,
-                message: "Failed to get balance".to_string(),
+                message: format!("Failed to get balance of {}", coin).to_string(),
             });
         }
     }
