@@ -35,10 +35,7 @@ pub fn sell(
                     }
                 }
             } else {
-                Err(Error {
-                    code: 4,
-                    message: format!("Does not meet threshold to sell: {} @ {}", symbol, ans),
-                })
+                Ok(())
             }
         }
 
