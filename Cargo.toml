@@ -11,6 +11,7 @@ toml = "*"
 queues = "1.0.2"
 binance = { git = "https://github.com/wisespace-io/binance-rs.git" }
 dotenv = "*"
+chrono = "*"
 # for discord
 serenity = { version = "*",default-features = false, features = ["client", "gateway", "rustls_backend", "model"]}
 async-std = "1.0"

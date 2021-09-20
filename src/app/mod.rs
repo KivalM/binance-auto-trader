@@ -1,19 +1,16 @@
 use std::{collections::HashMap, convert::TryInto, thread::sleep, time::Duration};
 
-use binance::{account::Account, api::Binance, market::Market};
-use queues::{IsQueue, Queue};
-use toml::Value;
-
-use crate::app::{
-    account::{check_new, check_owned},
-    notify::notify,
-};
-
 use self::{
+    account::{check_new, check_owned},
     config::{load_config, verify_config},
     error::Error,
+    notify::notify,
     watch::check_watched_symbols,
 };
+use binance::{account::Account, api::Binance, market::Market};
+use chrono::{DateTime, Utc};
+use queues::{IsQueue, Queue};
+use toml::Value;
 
 pub mod account;
 pub mod buy;
@@ -72,7 +69,8 @@ pub fn start() {
                 sleep(sleeptime);
             }
             Err(e) => {
-                println!("Error: {}", e.message);
+                let now = Utc::now().to_rfc3339();
+                println!("[{}] Error: {}", now, e.message);
                 continue;
             }
         }
