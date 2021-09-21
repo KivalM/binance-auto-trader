@@ -8,7 +8,7 @@ use crate::app::notify::notify;
 use super::error::Error;
 const DEPTH: f64 = 10000.0;
 const MIN: f64 = 20.0;
-
+const MAX_DIFF: f64 = 5.0;
 /// will purchase a certain coin for a specific price
 /// amount is the amount in `fiat`
 /// if the total amount is not available,
@@ -24,11 +24,32 @@ pub fn buy(
     current_price: f64,
     cfg: &Value,
 ) -> Result<(), Error> {
+    let token = symbol.replace(fiat, "");
+    let amount_owned: f64;
+    let owned = account.get_balance(token);
+    match owned {
+        Ok(answer) => {
+            amount_owned = answer.free.parse().unwrap();
+            let token_amt = amount / current_price;
+            if (amount_owned - token_amt).abs() <= MAX_DIFF {
+                return Ok(());
+            } else if amount_owned > token_amt {
+                return Ok(());
+            }
+        }
+        Err(_) => {
+            return Err(Error {
+                code: 1,
+                message: "Failed to get account balance".to_string(),
+            })
+        }
+    }
+
     let account_balance = account.get_balance(fiat);
     match account_balance {
         Ok(answer) => {
             let fiat_owned: f64 = answer.free.parse().unwrap();
-            let final_amount = amount.max(MIN).min(fiat_owned) / current_price;
+            let final_amount = (amount - amount_owned).max(MIN).min(fiat_owned) / current_price;
             let rounded = (final_amount * DEPTH).floor() / DEPTH;
 
             if (fiat_owned / current_price >= rounded) && rounded >= MIN {
