@@ -194,6 +194,12 @@ Contributions are what make the open source community such an amazing place to b
 
 <!-- LICENSE -->
 
+## Risk Warning
+
+It is a personal project, use at your own risk. I will not be responsible for your investment losses. Cryptocurrency investment is subject to high market risk.
+
+<!-- LICENSE -->
+
 ## License
 
 Distributed under the GPL-3.0 License. See `LICENSE` for more information.

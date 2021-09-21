@@ -8,7 +8,7 @@ use self::{
     watch::check_watched_symbols,
 };
 use binance::{account::Account, api::Binance, market::Market};
-use chrono::{DateTime, Utc};
+use chrono::Utc;
 use queues::{IsQueue, Queue};
 use toml::Value;
 
