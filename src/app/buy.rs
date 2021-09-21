@@ -42,7 +42,10 @@ pub fn buy(
                         println!("Error: {:?}", e);
                         return Err(Error {
                             code: 2,
-                            message: format!("{:?}", &e),
+                            message: format!(
+                                "buy {} amt {} @ {} {:?}",
+                                symbol, rounded, current_price, &e
+                            ),
                         });
                     }
                 }
