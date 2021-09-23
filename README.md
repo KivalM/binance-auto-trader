@@ -148,15 +148,15 @@ By default only watches ADA and ETH; To customise it to coins of your choice
 2. Add the tokens of your choice in the specified format
 
    ```toml
-   [tokens.eth]
-   symbol = "ETHUSDT"
-   token = "ETH"
-   fiat = "USDT"
-   perc_up = 0.865
-   time_up = 151
-   perc_down = 0.865
-   time_down = -1.855
-   ratio = 50.0
+   [[tokens]]
+   symbol = "ADAUSDT"
+   token = "ADA"
+   base = "USDT"
+   perc_up = 1.798
+   time_up = 140
+   perc_down = -1.781
+   time_down = 146
+   ratio = 20.0
    ```
 
    - time_down ~ the time range over which to determine to sell( in 5 min intervals)

@@ -1,5 +1,5 @@
 [package]
-name = "crypto-trader"
+name = "binance-auto-trader"
 version = "0.1.0"
 edition = "2018"
 
@@ -8,10 +8,8 @@ edition = "2018"
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 toml = "*"
-queues = "1.0.2"
 binance = { git = "https://github.com/wisespace-io/binance-rs.git" }
 dotenv = "*"
-chrono = "*"
 # for discord
 serenity = { version = "*",default-features = false, features = ["client", "gateway", "rustls_backend", "model"]}
 async-std = "1.0"

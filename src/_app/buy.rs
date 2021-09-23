@@ -27,6 +27,8 @@ pub fn buy(
     let token = symbol.replace(fiat, "");
     let amount_owned: f64;
     let owned = account.get_balance(token);
+
+    // check if you already own the coin
     match owned {
         Ok(answer) => {
             amount_owned = answer.free.parse().unwrap();
@@ -49,12 +51,17 @@ pub fn buy(
     match account_balance {
         Ok(answer) => {
             let fiat_owned: f64 = answer.free.parse().unwrap();
+            // determine the final amount to purchase
+            // this will be equivalent to the max between `MIN` and the difference between the amount to buy and the amount owned
+            // and then whatever is lower between that and your current balance
             let final_amount = (amount - amount_owned).max(MIN).min(fiat_owned) / current_price;
+            // round it off to DEPTH decimal places, this will be replaced by step size ASAP
             let rounded = (final_amount * DEPTH).floor() / DEPTH;
-
+            // check if have sufficient balance
+            // `(fiat_owned / current_price >= rounded)` is probably redundant
             if (fiat_owned / current_price >= rounded) && rounded >= MIN {
                 match account.market_buy(symbol, rounded) {
-                    Ok(answer) => {
+                    Ok(OK) => {
                         notify(format!("BUY: {} @ {}", symbol, current_price), cfg);
                         println!("{:?}", answer);
                         return Ok(());
