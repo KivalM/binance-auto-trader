@@ -17,7 +17,7 @@ pub fn conv_step(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<f64, Error
 }
 
 pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
-    let t = token.symbol.replace(&cfg.config.base_pair, "");
+    let t = token.symbol.replace(&token.base, "");
     let amount_owned: f64;
 
     let current_price: f64;
