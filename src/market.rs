@@ -10,9 +10,14 @@ pub fn get_kline_stats(token: &Token, cfg: &ApiInfo) -> Result<(f64, f64, f64), 
     {
         Ok(klines) => match klines {
             binance::model::KlineSummaries::AllKlineSummaries(klines) => {
-                let currprice = klines[max].to_owned().open;
-                let downprice = klines[max - token.time_down as usize].to_owned().open;
-                let upprice = klines[max - token.time_up as usize].to_owned().open;
+                let up = klines[max - token.time_up as usize].to_owned();
+                let down = klines[max - token.time_down as usize].to_owned();
+                let now = klines[max].to_owned();
+
+                // `average` them
+                let currprice = (now.low + now.high) / 2.0;
+                let downprice = (down.low + down.high) / 2.0;
+                let upprice = (up.low + up.high) / 2.0;
                 Ok((currprice, downprice, upprice))
             }
         },
