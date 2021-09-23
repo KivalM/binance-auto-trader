@@ -51,36 +51,6 @@ discord_token = ""
 # discord channels to send notifications to
 channel_ids = [886912998831181835,774344735501844491]
 
-# watched tokens
-# i.e tokens with a specific set of instructions to buy and sell
-# these will be based on statistical backed data to determine the best values
-# or you can put whatever
-#
-# delete these if you dont want to `watch` any tokens
-# these are significantly safer than volatility tokens
-# and you can easily determine the best values from my other test program
-# soon to be integrated with this one
-[[tokens]]
-symbol = "ETHUSDT"
-token = "ETH"
-base = "USDT"
-perc_up = 0.151
-time_up = 152
-perc_down =  -1.96
-time_down = 35
-ratio = 80.0
-
-[[tokens]]
-symbol = "ADAUSDT"
-token = "ADA"
-base = "USDT"
-perc_up = 1.798
-time_up = 140
-perc_down = -1.781
-time_down = 146
-ratio = 20.0
-
-
 # automatically purchase coins after they went up `up` percent in the past `interval` seconds
 # for eg. 5% in the past 5 minutes
 # volatility trading is not a great idea
@@ -121,3 +91,34 @@ buy_new_tokens = false
 
 # percent of total balance to put into a newly listed token
 new_token_amount = 30.0
+
+# watched tokens
+# i.e tokens with a specific set of instructions to buy and sell
+# these will be based on statistical backed data to determine the best values
+# or you can put whatever
+#
+# delete these if you dont want to `watch` any tokens
+# these are significantly safer than volatility tokens
+# and you can easily determine the best values from my other test program
+# soon to be integrated with this one
+[[tokens]]
+symbol = "ETHUSDT"
+token = "ETH"
+base = "USDT"
+perc_up = 0.151
+time_up = 152
+perc_down =  -1.96
+time_down = 35
+ratio = 80.0
+
+[[tokens]]
+symbol = "ADAUSDT"
+token = "ADA"
+base = "USDT"
+perc_up = 1.798
+time_up = 140
+perc_down = -1.781
+time_down = 146
+ratio = 20.0
+
+
