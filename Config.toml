@@ -25,7 +25,7 @@
 # num intervals tell the program over how many `time_interval`s 
 # to look at to determine whether a coin counts as increasing
 
-time_interval = 60
+time_interval = 300
 num_intervals = 5
 
 # base of pair

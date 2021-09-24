@@ -16,9 +16,10 @@ pub fn check_watched_symbols(
 
     for i in tokens {
         let (curr, down, up) = get_kline_stats(i, cfg)?;
+        println!("C {} d {} u {}", curr, down, up);
         let to_buy = percent(up, curr) >= i.perc_up;
         let to_sell = percent(down, curr) <= i.perc_down;
-
+        println!("b {} s {}", to_buy, to_sell);
         if to_buy && to_sell {
             continue;
         } else if to_buy {

@@ -1,7 +1,6 @@
-use std::collections::HashMap;
-
 use crate::{buy::conv_step, config::Token, error::Error, general::ApiInfo, notify::notify};
-
+use rust_decimal::prelude::*;
+use std::collections::HashMap;
 pub fn sell(token: &Token, cfg: &ApiInfo, curr_prices: &HashMap<String, f64>) -> Result<(), Error> {
     let amt = cfg.account.get_balance(token.token.clone());
     match amt {
@@ -10,7 +9,9 @@ pub fn sell(token: &Token, cfg: &ApiInfo, curr_prices: &HashMap<String, f64>) ->
             let min = 20.0 / curr_prices[&token.symbol];
 
             if ans > min {
-                let rounded = conv_step(ans, token, cfg)?;
+                let rounded_dec: Decimal = conv_step(ans, token, cfg)?;
+                let rounded: f64 = rounded_dec.to_string().parse().unwrap();
+                println!("{}", rounded);
                 match cfg.account.market_sell(token.symbol.clone(), rounded) {
                     Ok(_) => {
                         notify(
@@ -21,10 +22,11 @@ pub fn sell(token: &Token, cfg: &ApiInfo, curr_prices: &HashMap<String, f64>) ->
                         return Ok(());
                     }
                     Err(e) => {
+                        println!("{:?}", e);
                         return Err(Error {
                             code: 3,
                             message: e.to_string(),
-                        })
+                        });
                     }
                 }
             }
@@ -32,10 +34,11 @@ pub fn sell(token: &Token, cfg: &ApiInfo, curr_prices: &HashMap<String, f64>) ->
             Ok(())
         }
         Err(e) => {
+            println!("{:?}", e);
             return Err(Error {
                 code: 3,
                 message: e.to_string(),
-            })
+            });
         }
     }
 }

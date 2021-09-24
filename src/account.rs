@@ -1,8 +1,7 @@
 use std::collections::HashMap;
 
-use binance::{market::Market, model::Prices};
-
 use crate::{error::Error, general::ApiInfo};
+use binance::{market::Market, model::Prices};
 
 pub fn get_prices(market: &Market) -> Result<HashMap<String, f64>, Error> {
     match market.get_all_prices() {
@@ -37,10 +36,13 @@ pub fn get_balance(cfg: &ApiInfo) -> Result<HashMap<String, f64>, Error> {
             }
             Ok(res)
         }
-        Err(e) => Err(Error {
-            code: 2,
-            message: e.to_string(),
-        }),
+        Err(e) => {
+            println!("{:?}", e);
+            Err(Error {
+                code: 2,
+                message: e.to_string(),
+            })
+        }
     }
 }
 

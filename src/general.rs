@@ -1,4 +1,7 @@
+use std::str::FromStr;
+
 use binance::{account::Account, general::General, market::Market};
+use rust_decimal::Decimal;
 
 use crate::{
     config::{Config, Token},
@@ -12,7 +15,7 @@ pub struct ApiInfo {
     pub config: Config,
 }
 
-pub fn get_step_size(token: &Token, cfg: &ApiInfo) -> Result<(f64, f64), Error> {
+pub fn get_step_size(token: &Token, cfg: &ApiInfo) -> Result<(Decimal, Decimal), Error> {
     match cfg.general.get_symbol_info(token.symbol.clone()) {
         Ok(answer) => {
             for i in answer.filters {
@@ -21,7 +24,11 @@ pub fn get_step_size(token: &Token, cfg: &ApiInfo) -> Result<(f64, f64), Error> 
                         min_qty,
                         max_qty: _,
                         step_size,
-                    } => return Ok((min_qty.parse().unwrap(), step_size.parse().unwrap())),
+                    } => {
+                        let min = Decimal::from_str(&min_qty).unwrap();
+                        let step = Decimal::from_str(&step_size).unwrap();
+                        return Ok((min, step));
+                    }
 
                     _ => {
                         continue;

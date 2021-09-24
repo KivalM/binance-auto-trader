@@ -5,13 +5,15 @@ use crate::config::Token;
 use crate::general::get_step_size;
 use crate::notify::notify;
 use crate::{error::Error, general::ApiInfo};
-
+use rust_decimal::prelude::FromPrimitive;
+use rust_decimal::Decimal;
 const MIN: f64 = 20.0;
 const MAX_DIFF: f64 = 5.0;
 
-pub fn conv_step(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<f64, Error> {
+pub fn conv_step(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<Decimal, Error> {
+    let dec_amt = Decimal::from_f64(amount).unwrap();
     let (min, step) = get_step_size(token, cfg)?;
-    let n = ((amount - min) / step).floor();
+    let n = ((dec_amt - min) / step).floor();
     let amt = min + (n * step);
     Ok(amt)
 }
@@ -24,10 +26,11 @@ pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
     match cfg.market.get_price(token.symbol.clone()) {
         Ok(price) => current_price = price.price,
         Err(e) => {
+            println!("{:?}", e);
             return Err(Error {
                 code: 1,
                 message: e.to_string(),
-            })
+            });
         }
     };
     match cfg.account.get_balance(t) {
@@ -40,10 +43,11 @@ pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
             }
         }
         Err(e) => {
+            println!("{:?}", e);
             return Err(Error {
                 code: 1,
                 message: e.to_string(),
-            })
+            });
         }
     }
 
@@ -55,7 +59,8 @@ pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
             let mut final_amount = (amount - amount_owned).abs();
             final_amount.max(MIN).min(free_balance);
             final_amount /= current_price;
-            let rounded = conv_step(final_amount, token, cfg)?;
+            let rounded_dec = conv_step(final_amount, token, cfg)?;
+            let rounded: f64 = rounded_dec.to_string().parse().unwrap();
             if (free_balance / current_price >= rounded) && rounded >= MIN {
                 match cfg.account.market_buy(token.symbol.clone(), rounded) {
                     Ok(answer) => {
@@ -64,10 +69,11 @@ pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
                         return Ok(());
                     }
                     Err(e) => {
+                        println!("{:?}", e);
                         return Err(Error {
                             code: 1,
                             message: e.to_string(),
-                        })
+                        });
                     }
                 }
             }
@@ -75,10 +81,11 @@ pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
             Ok(())
         }
         Err(e) => {
+            println!("{:?}", e);
             return Err(Error {
                 code: 1,
                 message: e.to_string(),
-            })
+            });
         }
     }
 }
