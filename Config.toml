@@ -102,15 +102,6 @@ new_token_amount = 30.0
 # and you can easily determine the best values from my other test program
 # soon to be integrated with this one
 # ~825% increase since Jan 01 2021
-[[tokens]]
-symbol = "ETHUSDT"
-token = "ETH"
-base = "USDT"
-perc_up = 0.209
-time_up = 151
-perc_down =  -2.008 
-time_down = 34
-ratio = 100.0
 
 [[tokens]]
 symbol = "ADAUSDT"
@@ -120,6 +111,18 @@ perc_up = 2.778
 time_up = 167
 perc_down = -1.501 
 time_down = 168
-ratio = 100.0
+ratio = 50.0
+
+[[tokens]]
+symbol = "ETHUSDT"
+token = "ETH"
+base = "USDT"
+perc_up = 0.209
+time_up = 151
+perc_down =  -2.008 
+time_down = 34
+ratio = 50.0
+
+
 
 
