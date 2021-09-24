@@ -37,11 +37,11 @@ pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
         Ok(balance) => {
             amount_owned = balance.free.parse().unwrap();
             let token_amt = amount / current_price;
-            println!("{}", amount_owned);
+            // println!("{}", amount_owned);
             if (amount_owned - token_amt).abs() <= (MAX_DIFF / current_price)
                 || amount_owned > token_amt
             {
-                println!("{}, {}", amount_owned, token_amt);
+                // println!("{}, {}", amount_owned, token_amt);
                 return Ok(());
             }
         }
@@ -61,10 +61,14 @@ pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
 
             let mut final_amount = (amount - amount_owned).abs();
             final_amount.max(MIN).min(free_balance);
+
             final_amount /= current_price;
+
             let rounded_dec = conv_step(final_amount, token, cfg)?;
             let rounded: f64 = rounded_dec.to_string().parse().unwrap();
-            if (free_balance / current_price >= rounded) && rounded >= MIN {
+            // println!("r {}", rounded);
+            // println!("f {}", free_balance / current_price);
+            if (free_balance / current_price >= rounded) && rounded >= (MIN / current_price) {
                 match cfg.account.market_buy(token.symbol.clone(), rounded) {
                     Ok(answer) => {
                         println!("{:?}", answer);
