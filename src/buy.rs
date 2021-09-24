@@ -59,7 +59,7 @@ pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
         Ok(answer) => {
             let free_balance: f64 = answer.free.parse().unwrap();
 
-            let mut final_amount = (amount - amount_owned).abs();
+            let mut final_amount = ((amount) - (amount_owned * current_price)).abs();
             final_amount.max(MIN).min(free_balance);
 
             final_amount /= current_price;
