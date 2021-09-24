@@ -39,6 +39,7 @@ pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
             let token_amt = amount / current_price;
             println!("{}", amount_owned);
             if (amount_owned - token_amt).abs() <= MAX_DIFF || amount_owned > token_amt {
+                println!("{}, {}", amount_owned, token_amt);
                 return Ok(());
             }
         }
