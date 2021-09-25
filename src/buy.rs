@@ -5,10 +5,10 @@ use crate::config::Token;
 use crate::general::get_step_size;
 use crate::notify::notify;
 use crate::{error::Error, general::ApiInfo};
-use rust_decimal::prelude::FromPrimitive;
+use rust_decimal::prelude::*;
 use rust_decimal::Decimal;
 const MIN: f64 = 20.0;
-const MAX_DIFF: f64 = 5.0;
+const MAX_DIFF: f64 = 20.0;
 
 pub fn conv_step(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<Decimal, Error> {
     let dec_amt = Decimal::from_f64(amount).unwrap();
@@ -19,7 +19,7 @@ pub fn conv_step(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<Decimal, E
 }
 
 pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
-    let t = token.symbol.replace(&token.base, "");
+    let t = token.token.clone();
     let amount_owned: f64;
 
     let current_price: f64;
@@ -62,10 +62,12 @@ pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
             final_amount.max(MIN).min(free_balance);
 
             final_amount /= current_price;
-
+            println!("f {}", final_amount);
             let rounded_dec = conv_step(final_amount, token, cfg)?;
-            let rounded: f64 = rounded_dec.to_string().parse().unwrap();
-
+            let rounded: f64 = rounded_dec.to_f64().unwrap();
+            println!("r {}", rounded);
+            println!("m {}", (MIN / current_price));
+            println!("z {}", (free_balance / current_price >= rounded));
             if (free_balance / current_price >= rounded) && rounded >= (MIN / current_price) {
                 match cfg.account.market_buy(token.symbol.clone(), rounded) {
                     Ok(answer) => {

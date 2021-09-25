@@ -10,7 +10,7 @@ pub fn sell(token: &Token, cfg: &ApiInfo, curr_prices: &HashMap<String, f64>) ->
 
             if ans > min {
                 let rounded_dec: Decimal = conv_step(ans, token, cfg)?;
-                let rounded: f64 = rounded_dec.to_string().parse().unwrap();
+                let rounded: f64 = rounded_dec.to_f64().unwrap();
                 println!("{}", rounded);
                 match cfg.account.market_sell(token.symbol.clone(), rounded) {
                     Ok(_) => {
