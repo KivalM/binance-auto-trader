@@ -67,7 +67,7 @@ pub fn buy(amount: f64, token: &Token, cfg: &ApiInfo) -> Result<(), Error> {
             let rounded: f64 = rounded_dec.to_f64().unwrap();
             println!("r {}", rounded);
             println!("m {}", (MIN / current_price));
-            println!("z {}", (free_balance / current_price >= rounded));
+            println!("z {}", (free_balance / current_price));
             if (free_balance / current_price >= rounded) && rounded >= (MIN / current_price) {
                 match cfg.account.market_buy(token.symbol.clone(), rounded) {
                     Ok(answer) => {
