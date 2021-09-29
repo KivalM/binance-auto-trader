@@ -25,7 +25,7 @@
 # num intervals tell the program over how many `time_interval`s 
 # to look at to determine whether a coin counts as increasing
 
-time_interval = 300
+time_interval = 60
 num_intervals = 5
 
 # base of pair
@@ -102,25 +102,25 @@ new_token_amount = 30.0
 # and you can easily determine the best values from my other test program
 # soon to be integrated with this one
 # ~825% increase since Jan 01 2021
-
+# profit% 125.37274921146008 perc up 1.387 time up1 perc down-2 time down5
 [[tokens]]
 symbol = "ADAUSDT"
 token = "ADA"
 base = "USDT"
-perc_up = 2.778
-time_up = 167
-perc_down = -1.501 
-time_down = 168
+perc_up = 1.387
+time_up = 1
+perc_down = -2.0
+time_down = 5
 ratio = 50.0
 
 [[tokens]]
 symbol = "ETHUSDT"
 token = "ETH"
 base = "USDT"
-perc_up = 0.209
-time_up = 151
-perc_down =  -2.008 
-time_down = 34
+perc_up = 0.8
+time_up = 1
+perc_down =  -1.197
+time_down = 2
 ratio = 50.0
 
 

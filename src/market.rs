@@ -6,7 +6,7 @@ pub fn get_kline_stats(token: &Token, cfg: &ApiInfo) -> Result<(f64, f64, f64), 
 
     match cfg
         .market
-        .get_klines(token.symbol.clone(), "5m", lim, None, None)
+        .get_klines(token.symbol.clone(), "1m", lim, None, None)
     {
         Ok(klines) => match klines {
             binance::model::KlineSummaries::AllKlineSummaries(klines) => {
